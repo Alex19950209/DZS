@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="src/jquery-1.11.1.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        #ipt{
+            margin-top: 40px;
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+        }
+        .pro{
+            width: 200px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+        .pro p{
+            height: 30px;
+            line-height: 30px;
+            text-align: left;
+            display: none;
+        }
+        .pro p:hover{
+            background: #ccc;
+        }
+        .sel{
+            margin-top: 40px;
+            width: 100%;
+            height: 100px;
+            border: 5px solid #ccc;
+        }
+        .sel span{
+            float: left;
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+        }
+        .sel .im{
+            background: url(images/select1.jpg) no-repeat center;
+        }
+        .sel .selected{
+            background: url(images/select2.jpg) no-repeat center;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" list="Name">
+    <datalist id="Name">
+        <option value="James">
+        <option value="Love">
+        <option value="Irving">
+    </datalist>
+    
+    
+    <form action="">
+        <input type="text" name="" id="ipt">
+        <div class="pro">
+            <p class="p1">噢噢噢噢</p>
+            <p class="p2">aaaaaaaa</p>
+        </div> 
+    </form>
+    
+    <div class="sel">
+        <span class="txt">James</span>
+        <span class="im selected"></span>
+        <span class="txt">Love</span>
+        <span class="im"></span>
+        <span class="txt">Irving</span>
+        <span class="im"></span>
+    </div>
+    <script>
+      
+       $('#ipt').keyup(function(){
+           var $val = $('#ipt').val();
+           var $p = $('.pro>p');
+           for(var i=0;i<$p.lenght;i++){
+              if($val.indexOf($p.eq(i).html().charAt(0) != -1)){
+                  $('.pro').show();
+                  $p.eq(i).show();
+              } 
+           }
+           
+       })
+       
+       $('span.im').click(function(){
+           $(this).toggleClass('selected').siblings('.im').removeClass('selected');
+           
+       })
+    </script>
+    
+</body>
+</html>

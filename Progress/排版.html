@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="src/jquery-1.11.1.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        header, nav, footer{
+            width: 600px;
+            height: 100px;
+            background: #c1660c;
+            margin: 0 auto;
+        }
+        header, footer{
+            font-size: 40px;
+            color: aliceblue;
+            text-align: center;
+            line-height: 100px;
+        }
+        nav li{
+            float: left;
+            width: 25%;
+            font-size: 40px;
+            text-align: center;
+            line-height: 100px;
+        }
+        .ctn{
+            width: 600px;
+            height: 300px;
+            background: orange;
+            margin: 0 auto;
+        }
+        section{
+            float: left;
+            width: 300px;
+            font-size: 60px;
+            text-align: center;
+            line-height: 300px;
+            background: #764b20;
+        }
+        aside{
+            float: right;
+            width: 200px;
+            font-size: 50px;
+            text-align: center;
+            line-height: 300px;
+            border-left: 1px solid #ccc;
+            background: #1b8834;
+        }
+    </style>
+              <!--   [IF it IE 9]-->
+<!--
+    <script type="text/javascript">
+       var e = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(',');
+       for(var i = 0;i < e.length;i++){
+           document.createElement(e[i]);
+       }
+    </script>
+-->
+                 <!--    [EndIf]-->
+</head>
+<body>
+    <div class="box">
+        <header>Header</header>
+        <nav>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </nav>
+        <div class="ctn">
+            <section>Section</section>
+            <aside>Aside</aside>
+        </div>
+        
+        <footer>Footer</footer>
+    </div>
+    
+</body>
+</html>

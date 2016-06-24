@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="src/jquery-1.11.1.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 1000px;
+            height: 50px;
+            border: 1px solid #ccc;
+            background: #ccc;
+            margin: 20px auto;
+        }
+        .line{
+            width: 94%;
+            height: 6px;
+            background: #fff;
+            margin: 22px auto;
+            cursor: pointer;
+            position: relative;
+        }
+        .bg{
+            width: 0;
+            height: 6px;
+            background: green;
+        }
+        .ball{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+            left: 0px;
+            top: -2px;
+            box-shadow: 0 0 0px 5px rgba(253, 59, 11, 0.51);
+            cursor: pointer;
+        }
+        button{
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+   <button id="Switch">Start</button>
+   <button id="Reset">Reset</button>
+   <button id="FF">FF</button>
+   <button id="SP">SP</button>
+   <button id="RE">Review</button>
+   <p>进度：<span id="pro">0</span>%</p>
+    <div class="box">
+        <div class="line">
+            <div class="bg"></div>
+            <div class="ball"></div>
+        </div>
+        
+    </div>
+    <script>
+       window.onload = function(){
+//获取元素
+          var box = document.getElementsByClassName('box')[0]; 
+          var line = document.getElementsByClassName('line')[0];
+          var bg = document.getElementsByClassName('bg')[0];
+          var ball = document.getElementsByClassName('ball')[0];
+          var swf = document.getElementById('Switch');
+          var rst = document.getElementById('Reset');
+          var FF = document.getElementById('FF');
+          var SP = document.getElementById('SP');
+          var RE = document.getElementById('RE');
+          var pro = document.getElementById('pro');
+          var timer; 
+          var ld = 0;
+          var scale;
+          var i = 1;
+          var k = 1;
+          var isClick = false;
+           console.log(box.offsetLeft);
+//定义           
+          function Move(){
+              ld ++;
+              if(ld >= 940){
+                  clearInterval(timer);
+                  ld = 940;
+                  swf.innerHTML = 'End';
+              }
+              scale = parseInt(ld / 940 * 100) ;
+              pro.innerHTML = scale;
+              ball.style.left = ld + 'px';
+              bg.style.width = ld + 'px';
+          }
+//Start or Paused
+          swf.onclick = function(){
+            if(isClick){
+                clearInterval(timer);
+                isClick = false;
+                swf.textContent = 'Start';
+                FF.innerHTML = 'FF';
+                SP.innerHTML = 'SP';
+                i = 1;
+                k = 1;
+            }else{
+                timer = setInterval(Move,20);
+                isClick = true;
+                swf.textContent = 'Pause';
+            }
+            
+        }
+          
+// 点击进度条事件          
+           line.onclick = function(e){
+               e = event || window.event;
+               if(timer){
+                  clearInterval(timer);
+                  isClick = false;
+                  swf.innerHTML = 'Start';
+               }
+               ld  = e.clientX  - line.offsetLeft;
+               scale = parseInt(ld / 940 * 100);
+               pro.innerHTML = scale;
+               ball.style.left = ld + 'px';
+               bg.style.width = ld + 'px';
+           }
+//重置按钮事件
+           rst.onclick = function(){
+               
+                   clearInterval(timer);
+                   swf.innerHTML = 'Start';
+                   isClick = false;
+               
+               ld = 0;
+               FF.innerHTML = 'FF';
+               pro.innerHTML = '0';
+               ball.style.left = ld + 'px';
+               bg.style.width = ld + 'px';
+           }
+// 快进事件           
+           FF.onclick = function(){
+               
+               if(isClick){
+                  clearInterval(timer);
+                  SP.innerHTML = 'SP';
+                  i++;
+                  k = 1;
+                  FF.innerHTML = 'FFx' + (i - 1);
+                  if(i >= 5){
+                     i = 1;
+                     FF.innerHTML = 'FF';
+                  }
+                  timer = setInterval(Move, parseInt(20 / i));
+//                  isClick = true;
+               }
+           }  
+//慢放事件
+           SP.onclick = function(){
+               if(isClick){
+                  clearInterval(timer);
+                  FF.innerHTML = 'FF';
+                  k++;
+                  i =1;
+                  SP.innerHTML = 'SPx' + (k - 1);
+                  if(k >= 5){
+                     k = 1;
+                     SP.innerHTML = 'SP';
+                  }
+                  timer = setInterval(Move, parseInt(20 * k));
+//                  isClick = true;
+               }
+           }  
+//回放事件           
+           RE.onclick = function(){
+               if(timer){
+                  clearInterval(timer);
+                  FF.innerHTML = 'FF';
+                  SP.innerHTML = 'SP';
+                  swf.innerHTML = 'Start';
+                  ld -= 20;
+                  if(ld <= 0){
+                      ld = 0;
+                  }
+                  scale = parseInt(ld / 940 * 100);
+                  pro.innerHTML = scale;
+                  ball.style.left = ld + 'px';
+                  bg.style.width = ld + 'px';
+                  isClick = false;
+               }
+           }  
+           
+  }         
+           
+//         $(document).ready(function(event){
+//             event = event || window.event;
+//             var timer;
+//             var $i = 0;
+//             var scale;
+//             var isClick = false;
+//             function Move(){
+//                 $i++;
+//                 if($i >= 940){
+//                     $i = 940;
+//                     clearInterval(timer);
+//                 }
+//                 scale = parseInt($i / 940 * 100);
+//                 $('#pro').html(scale);
+//                 $('.ball').css('left',$i);
+//                 $('.bg').css('width',$i);
+//             }
+//
+//            $('.line').on('click', function(event){
+//                clearInterval(timer);
+//                $i = event.clientX - $(this).offset().left;
+//               
+//                $('#Switch').html('Start');
+//                isClick = false;
+//                scale = parseInt($i / 940 * 100);
+//                $('#pro').html(scale);
+//                $('.ball').css('left',$i);
+//                $('.bg').css('width',$i);
+//            }) 
+//            
+//            $('#Switch').click(function(){
+//                if(isClick){
+//                    clearInterval(timer);
+//                    isClick = false;
+//                    $(this).html('Start');
+//                }else{
+//                    timer = setInterval(Move,10);
+//                    isClick = true;
+//                    $(this).html('Paused');
+//                }
+//            })
+//            
+//            $('#Reset').click(function(){
+//                if(timer){
+//                    clearInterval(timer);
+//                    $('#Switch').html('Start');
+//                    isClick = false;
+//                }
+//                $i = 0;
+//                scale = parseInt($i / 940 * 100);
+//                $('#pro').html(scale);
+//                $('.ball').css('left',$i);
+//                $('.bg').css('width',$i);
+//                
+//            })
+//            
+//         })  
+           
+    
+    
+    </script>
+</body>
+</html>
